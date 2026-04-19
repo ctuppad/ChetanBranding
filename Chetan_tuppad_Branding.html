@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chetan Tuppad — Principal InfoSec Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --accent: #00e5c0;
+    --accent2: #7c6af7;
+    --accent3: #ff6b4a;
+    --text: #f0f0f5;
+    --text-muted: #7a7a9a;
+    --border: rgba(255,255,255,0.06);
+    --glow: rgba(0, 229, 192, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,229,192,0.4);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.4s ease, width 0.3s, height 0.3s;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.95), transparent);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(124,106,247,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(0,229,192,0.06) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-name span { color: var(--accent); }
+
+  .hero-title {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-title strong { color: var(--text); font-weight: 500; }
+
+  .hero-certs {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .cert-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(0,229,192,0.3);
+    border-radius: 2px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    background: rgba(0,229,192,0.04);
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+  .btn-primary {
+    padding: 0.9rem 2rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,229,192,0.3);
+  }
+  .btn-secondary {
+    padding: 0.9rem 2rem;
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Hero right - visual */
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0;
+    animation: fadeIn 1.2s 0.6s forwards;
+  }
+
+  .profile-frame {
+    position: relative;
+    width: 320px; height: 380px;
+  }
+  .profile-img-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--surface2) 0%, #1e1e2e 100%);
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+  .profile-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.8;
+    line-height: 1;
+  }
+  .profile-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .frame-accent {
+    position: absolute;
+    top: -12px; right: -12px;
+    width: 80px; height: 80px;
+    border-top: 2px solid var(--accent);
+    border-right: 2px solid var(--accent);
+  }
+  .frame-accent2 {
+    position: absolute;
+    bottom: -12px; left: -12px;
+    width: 80px; height: 80px;
+    border-bottom: 2px solid var(--accent2);
+    border-left: 2px solid var(--accent2);
+  }
+
+  .floating-stat {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.2rem;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  }
+  .floating-stat.s1 { top: 20px; left: -80px; animation: float 4s ease-in-out infinite; }
+  .floating-stat.s2 { bottom: 60px; right: -70px; animation: float 4s ease-in-out 2s infinite; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    background: var(--surface);
+  }
+  .stat-item { text-align: center; }
+  .stat-item .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-item .unit {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  /* Sections */
+  section { padding: 6rem 4rem; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 60px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  /* Expertise */
+  .expertise { background: var(--bg); }
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 3rem;
+    background: var(--border);
+  }
+  .expertise-card {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .expertise-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px; height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+  .expertise-card:hover { background: var(--surface2); }
+  .expertise-card:hover::before { height: 100%; }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .card-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-top: 1.2rem;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    background: rgba(0,229,192,0.06);
+    color: var(--text-muted);
+    border: 1px solid rgba(255,255,255,0.04);
+    letter-spacing: 0.05em;
+  }
+
+  /* Experience Timeline */
+  .experience { background: var(--surface); }
+  .timeline { margin-top: 3rem; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+  }
+
+  .timeline-item {
+    padding: 0 0 3rem 3rem;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+  .timeline-dot {
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 10px; height: 10px;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+    border-radius: 50%;
+  }
+  .timeline-dot.current { background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  .timeline-company {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+  .timeline-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* Certifications */
+  .certifications { background: var(--bg); }
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .cert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .cert-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,229,192,0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cert-card:hover { border-color: rgba(0,229,192,0.4); transform: translateY(-4px); }
+  .cert-card:hover::after { opacity: 1; }
+  .cert-issuer {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .cert-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .cert-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+  }
+
+  /* Recommendations */
+  .recommendations { background: var(--surface); }
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .rec-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .rec-card:hover { border-color: rgba(0,229,192,0.2); }
+  .rec-quote {
+    font-size: 3rem;
+    color: var(--accent);
+    opacity: 0.2;
+    line-height: 0.5;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1rem;
+  }
+  .rec-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .rec-author { display: flex; align-items: center; gap: 0.75rem; }
+  .rec-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .rec-name { font-size: 0.85rem; font-weight: 500; }
+  .rec-role { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* Impact Numbers */
+  .impact { background: var(--bg); }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 3rem;
+    background: var(--border);
+  }
+  .impact-item {
+    background: var(--surface);
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .impact-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .impact-item:hover::before { transform: scaleX(1); }
+  .impact-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .impact-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+    line-height: 1.5;
+  }
+
+  /* Contact */
+  .contact {
+    background: var(--surface);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,229,192,0.06) 0%, transparent 60%);
+  }
+  .contact-content { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .contact-title span { color: var(--accent); }
+  .contact-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    transition: all 0.3s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Footer */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+  .footer-right {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .footer-right span { color: var(--accent); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); opacity: 0.5; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 2rem; }
+    .stats-bar { grid-template-columns: repeat(2,1fr); padding: 2rem; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: repeat(2,1fr); }
+    .rec-grid { grid-template-columns: 1fr; }
+    .impact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">CT // InfoSec</div>
+  <ul class="nav-links">
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#recommendations">Recommendations</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="hero-tag">Principal InfoSec Engineer</div>
+    <h1 class="hero-name">Chetan<br><span>Tuppad</span></h1>
+    <p class="hero-title">
+      <strong>Principal InfoSec Engineer @ GoDaddy</strong> · 15+ years securing enterprise perimeters — PCI-DSS WAF hardening, ML-powered Bot Defense, Account Takeover Prevention, and Cloud Security across <strong>AWS · Akamai · Cloudflare</strong>.
+    </p>
+    <div class="hero-certs">
+      <span class="cert-badge">CISSP®</span>
+      <span class="cert-badge">PMP®</span>
+      <span class="cert-badge">ITIL®</span>
+      <span class="cert-badge">AWS SAA</span>
+      <span class="cert-badge">Azure</span>
+      <span class="cert-badge">CC®</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Let's Connect</a>
+      <a href="#experience" class="btn-secondary">View Journey</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="profile-frame">
+      <div class="profile-img-placeholder">
+        <div class="profile-initials">CT</div>
+        <div class="profile-sub">Bengaluru · India</div>
+      </div>
+      <div class="frame-accent"></div>
+      <div class="frame-accent2"></div>
+      <div class="floating-stat s1">
+        <div class="stat-num">23</div>
+        <div class="stat-label">Recommendations</div>
+      </div>
+      <div class="floating-stat s2">
+        <div class="stat-num">10</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="num">15+</div>
+    <div class="unit">Years Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">16+</div>
+    <div class="unit">Security Products Integrated</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">43%</div>
+    <div class="unit">Threat Reduction</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">56%</div>
+    <div class="unit">Performance Improvement</div>
+  </div>
+</div>
+
+<!-- Expertise -->
+<section class="expertise" id="expertise">
+  <div class="section-label">Core Domains</div>
+  <h2 class="section-title">What I Secure,<br>Architect & Deliver</h2>
+  <div class="expertise-grid">
+    <div class="expertise-card">
+      <span class="card-icon">🛡️</span>
+      <div class="card-title">PCI-DSS WAF Engineering</div>
+      <div class="card-desc">Architecting and hardening WAF rule sets to meet PCI-DSS compliance requirements — managing rule group tuning, false positive remediation, and enterprise-wide WAF strategy enforcement at scale.</div>
+      <div class="card-tags">
+        <span class="tag">AWS WAF</span>
+        <span class="tag">Akamai Kona</span>
+        <span class="tag">PCI-DSS</span>
+        <span class="tag">OWASP CRS</span>
+        <span class="tag">Cloudflare</span>
+      </div>
+    </div>
+    <div class="expertise-card">
+      <span class="card-icon">🤖</span>
+      <div class="card-title">Bot Defense & ATO Prevention</div>
+      <div class="card-desc">Designing ML-powered bot detection and Account Takeover (ATO) prevention systems — combining behavioral analytics, credential abuse signals, and fraud detection models to protect high-value user accounts.</div>
+      <div class="card-tags">
+        <span class="tag">Bot Manager</span>
+        <span class="tag">ATO Prevention</span>
+        <span class="tag">Fraud Detection</span>
+        <span class="tag">Behavioral Analytics</span>
+      </div>
+    </div>
+    <div class="expertise-card">
+      <span class="card-icon">☁️</span>
+      <div class="card-title">Cloud Security & AWS Baselines</div>
+      <div class="card-desc">Defining and enforcing AWS security baselines and policy documentation across multi-account environments — Zero Trust architecture, IAM governance, and compliance-driven cloud security controls.</div>
+      <div class="card-tags">
+        <span class="tag">AWS Security</span>
+        <span class="tag">Zero Trust</span>
+        <span class="tag">IAM</span>
+        <span class="tag">Security Baselines</span>
+        <span class="tag">Azure</span>
+      </div>
+    </div>
+    <div class="expertise-card">
+      <span class="card-icon">🏗️</span>
+      <div class="card-title">Infrastructure as Code (IaC)</div>
+      <div class="card-desc">Driving security-as-code adoption — translating manual security controls into repeatable, auditable Terraform modules that enforce compliance, reduce drift, and accelerate secure deployments by 50%.</div>
+      <div class="card-tags">
+        <span class="tag">Terraform</span>
+        <span class="tag">IaC</span>
+        <span class="tag">DevSecOps</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">Python</span>
+      </div>
+    </div>
+    <div class="expertise-card">
+      <span class="card-icon">📊</span>
+      <div class="card-title">Security Logging & Observability</div>
+      <div class="card-desc">Building enterprise-grade security logging pipelines, alerting mechanisms, and SIEM integrations — ensuring full threat visibility, compliance audit trails, and rapid incident response capability.</div>
+      <div class="card-tags">
+        <span class="tag">CloudWatch</span>
+        <span class="tag">SIEM</span>
+        <span class="tag">Alerting</span>
+        <span class="tag">Incident Response</span>
+        <span class="tag">Threat Visibility</span>
+      </div>
+    </div>
+    <div class="expertise-card">
+      <span class="card-icon">⚡</span>
+      <div class="card-title">CDN & Edge Security</div>
+      <div class="card-desc">9+ years at Akamai architecting CDN security for global enterprises — DDoS mitigation, TLS/SSL management, edge compute security, and perimeter defense for Fortune 500 customers.</div>
+      <div class="card-tags">
+        <span class="tag">Akamai</span>
+        <span class="tag">DDoS Mitigation</span>
+        <span class="tag">Edge Compute</span>
+        <span class="tag">TLS/SSL</span>
+        <span class="tag">Perimeter Defense</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section class="experience" id="experience">
+  <div class="section-label">Career Journey</div>
+  <h2 class="section-title">15 Years at<br>the Security Edge</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot current"></div>
+      <div class="timeline-period">Jul 2025 – Present</div>
+      <div class="timeline-role">Principal InfoSec Engineer</div>
+      <div class="timeline-company">GoDaddy · Bengaluru, India</div>
+      <div class="timeline-desc">Leading WAF/PCI-DSS initiatives, Bot Manager deployment, fraud detection systems, and AWS security baseline enforcement. Driving IaC adoption and cloud security architecture across multi-cloud environments.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2015 – Jul 2025 · 9+ Years</div>
+      <div class="timeline-role">Senior Security Architect / Solution Architect</div>
+      <div class="timeline-company">Akamai Technologies · Bengaluru, India</div>
+      <div class="timeline-desc">Architected CDN and application security solutions for global enterprise clients. Led Bot Manager, Kona Site Defender, and edge security deployments. Integrated 16+ security products, reduced threats by 43%, improved system performance by 56%.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">May 2014 – Apr 2016 · 2 Years</div>
+      <div class="timeline-role">Staff Consultant II</div>
+      <div class="timeline-company">Oracle · Greater Bengaluru Area</div>
+      <div class="timeline-desc">Enterprise software consulting, application security, and Java-based security framework implementation for Oracle's global financial services customers.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Sep 2010 – May 2014 · 3 yrs 9 mos</div>
+      <div class="timeline-role">Systems Engineer</div>
+      <div class="timeline-company">Infosys · India</div>
+      <div class="timeline-desc">Foundation in enterprise systems, Java development, and large-scale IT consulting. Built the technical bedrock for a security-focused career.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Impact -->
+<section class="impact" id="impact">
+  <div class="section-label">Measurable Impact</div>
+  <h2 class="section-title">Numbers That<br>Define the Work</h2>
+  <div class="impact-grid">
+    <div class="impact-item">
+      <div class="impact-num">56%</div>
+      <div class="impact-label">System performance improvement through optimized security architecture</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">43%</div>
+      <div class="impact-label">Reduction in security threats via Bot Management and WAF hardening</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">50%</div>
+      <div class="impact-label">Deployment time reduction through security automation and IaC</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">16+</div>
+      <div class="impact-label">Enterprise security products integrated across multi-cloud environments</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">23</div>
+      <div class="impact-label">LinkedIn recommendations from Google, Splunk, and Akamai colleagues</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-num">10</div>
+      <div class="impact-label">Industry certifications including CISSP, PMP, AWS, Azure, and Akamai</div>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section class="certifications" id="certifications">
+  <div class="section-label">Credentials</div>
+  <h2 class="section-title">10 Certifications.<br>Zero Shortcuts.</h2>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <div class="cert-issuer">ISC2</div>
+      <div class="cert-name">CISSP®</div>
+      <div class="cert-year">Nov 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">ISC2</div>
+      <div class="cert-name">Certified in Cybersecurity (CC®)</div>
+      <div class="cert-year">Jul 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">PMI</div>
+      <div class="cert-name">Project Management Professional (PMP®)</div>
+      <div class="cert-year">Dec 2020</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Akamai</div>
+      <div class="cert-name">Next Gen Technical Leader</div>
+      <div class="cert-year">Jun 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Akamai</div>
+      <div class="cert-name">Bot Manager Certification (Pro)</div>
+      <div class="cert-year">Apr 2023</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Akamai</div>
+      <div class="cert-name">Kona Site Defender (Pro)</div>
+      <div class="cert-year">Apr 2023</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">AWS</div>
+      <div class="cert-name">Solutions Architect Associate</div>
+      <div class="cert-year">Active</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Microsoft</div>
+      <div class="cert-name">Azure Fundamentals</div>
+      <div class="cert-year">Feb 2022</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">AXELOS</div>
+      <div class="cert-name">ITIL® 4 Foundation</div>
+      <div class="cert-year">May 2021</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Oracle</div>
+      <div class="cert-name">Java Certified Professional</div>
+      <div class="cert-year">Active</div>
+    </div>
+  </div>
+</section>
+
+<!-- Recommendations -->
+<section class="recommendations" id="recommendations">
+  <div class="section-label">Social Proof</div>
+  <h2 class="section-title">23 Peers Vouch<br>for the Work</h2>
+  <div class="rec-grid">
+    <div class="rec-card">
+      <div class="rec-quote">"</div>
+      <div class="rec-text">I was consistently impressed by his deep expertise in CDN and application security. His ability to drive complex initiatives across global regions and simplify them into actionable outcomes is rare at this level.</div>
+      <div class="rec-author">
+        <div class="rec-avatar">AM</div>
+        <div>
+          <div class="rec-name">Akhil Mohan</div>
+          <div class="rec-role">Cloud Architect · Google</div>
+        </div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-quote">"</div>
+      <div class="rec-text">When Chetan gets assigned to manage the same accounts as I do, I am assured that he will be taking great care of the customer. His can-do attitude and technical depth is genuinely exceptional.</div>
+      <div class="rec-author">
+        <div class="rec-avatar">CK</div>
+        <div>
+          <div class="rec-name">Chia-Ming Kee</div>
+          <div class="rec-role">Solutions Engineer · Splunk</div>
+        </div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-quote">"</div>
+      <div class="rec-text">A rare blend of deep technical security expertise and program management discipline. Chetan brings both the architecture vision and the execution rigor to deliver at enterprise scale.</div>
+      <div class="rec-author">
+        <div class="rec-avatar">—</div>
+        <div>
+          <div class="rec-name">Akamai Colleague</div>
+          <div class="rec-role">Enterprise Security · Akamai Technologies</div>
+        </div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-quote">"</div>
+      <div class="rec-text">23 recommendations across a career speaks for itself — Chetan is the person teams trust to own the hardest security problems and see them through to resolution.</div>
+      <div class="rec-author">
+        <div class="rec-avatar">+</div>
+        <div>
+          <div class="rec-name">20 More Recommendations</div>
+          <div class="rec-role">View full profile on LinkedIn →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-content">
+    <div class="section-label" style="justify-content:center;">Get In Touch</div>
+    <h2 class="contact-title">Let's Build<br><span>Secure</span> Things</h2>
+    <p class="contact-desc">Open to Principal Security Consultant, Security Architect, and Cybersecurity Leadership roles globally. Also available for advisory, consulting, and speaking engagements.</p>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/chetantuppad" class="contact-link" target="_blank">🔗 LinkedIn</a>
+      <a href="mailto:chetan.tuppad@gmail.com" class="contact-link">✉ Email</a>
+      <a href="#" class="contact-link">📄 Resume</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2026 · Chetan Tuppad · Bengaluru, India</div>
+  <div class="footer-right">Principal InfoSec Engineer · <span>GoDaddy</span> · CISSP® · PMP®</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform += ' scale(1.5)';
+      ring.style.width = '52px'; ring.style.height = '52px';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+
+  // Timeline scroll animation
+  const items = document.querySelectorAll('.timeline-item');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 150);
+      }
+    });
+  }, { threshold: 0.2 });
+  items.forEach(i => obs.observe(i));
+
+  // Count-up animation for impact numbers
+  function countUp(el, target, suffix = '') {
+    let start = 0;
+    const dur = 1800;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const prog = Math.min((timestamp - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - prog, 3);
+      el.textContent = Math.floor(ease * target) + suffix;
+      if (prog < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const impactObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const nums = e.target.querySelectorAll('.impact-num');
+        nums.forEach(n => {
+          const text = n.textContent;
+          const num = parseFloat(text);
+          const suffix = text.includes('%') ? '%' : text.includes('+') ? '+' : '';
+          countUp(n, num, suffix);
+        });
+        impactObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const impactSection = document.querySelector('.impact-grid');
+  if (impactSection) impactObs.observe(impactSection);
+</script>
+</body>
+</html>
