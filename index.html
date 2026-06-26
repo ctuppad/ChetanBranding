@@ -287,6 +287,9 @@ nav.scrolled {
   inset: 0;
   z-index: 0;
 }
+.profile-img img.hidden {
+  display: none;
+}
 .profile-img::after {
   content:'';
   position:absolute; inset:0;
@@ -298,9 +301,12 @@ nav.scrolled {
   font-size: 9rem;
   font-weight: 300;
   color: var(--gold);
-  opacity: .15;
+  opacity: .4;
   line-height: 1;
   position: relative; z-index:1;
+  display: flex;
+}
+.profile-img:has(img:not(.hidden)) .profile-initial-art {
   display: none;
 }
 .profile-geo {
@@ -1407,7 +1413,7 @@ footer {
   <div class="hero-right">
     <div class="profile-block">
       <div class="profile-img">
-        <img src="profile-photo.jpg" alt="Chetan Tuppad - Principal InfoSec Engineer">
+        <img src="profile-photo.jpg" alt="Chetan Tuppad - Principal InfoSec Engineer" onerror="this.classList.add('hidden')">
         <div class="profile-geo"></div>
         <div class="profile-initial-art">CT</div>
         <div class="profile-caption">
