@@ -274,11 +274,24 @@ nav.scrolled {
   flex-direction: column; gap:1rem;
   position: relative;
   overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 .profile-img::after {
   content:'';
   position:absolute; inset:0;
   background: linear-gradient(to top, rgba(12,12,14,0.9) 0%, transparent 50%);
+  z-index: 1;
 }
 .profile-initial-art {
   font-family: 'Cormorant Garamond', serif;
@@ -288,6 +301,7 @@ nav.scrolled {
   opacity: .15;
   line-height: 1;
   position: relative; z-index:1;
+  display: none;
 }
 .profile-geo {
   position: absolute;
@@ -295,6 +309,7 @@ nav.scrolled {
   width: 60px; height: 60px;
   border: 1px solid var(--border);
   display: flex; align-items:center; justify-content:center;
+  z-index: 2;
 }
 .profile-geo::before {
   content:'';
@@ -1092,7 +1107,241 @@ footer {
 
 /* selection */
 ::selection { background:var(--gold); color:var(--ink); }
-</style>
+
+/* ══════ ACHIEVEMENTS SECTION STYLES ══════ */
+
+.achievements-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 4rem 0;
+}
+
+.ach-stat-card {
+  background: rgba(200,169,110,0.03);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all .3s ease;
+}
+
+.ach-stat-card:hover {
+  border-color: var(--gold);
+  background: rgba(200,169,110,0.08);
+  transform: translateY(-4px);
+}
+
+.ach-stat-icon {
+  font-size: 2rem;
+  margin-bottom: .75rem;
+  filter: grayscale(0.3);
+}
+
+.ach-stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: .5rem;
+  line-height: 1;
+}
+
+.ach-stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: .65rem;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  color: var(--muted);
+}
+
+.ach-stat-note {
+  font-size: .6rem;
+  color: var(--muted);
+  margin-top: .25rem;
+  opacity: .7;
+}
+
+.ach-outcomes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 5rem 0;
+}
+
+.ach-outcome-card {
+  background: rgba(200,169,110,0.02);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  transition: all .3s ease;
+}
+
+.ach-outcome-card:hover {
+  border-color: var(--gold);
+  background: rgba(200,169,110,0.06);
+  box-shadow: 0 8px 32px rgba(200,169,110,0.08);
+}
+
+.ach-outcome-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  filter: grayscale(0.2);
+}
+
+.ach-outcome-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--paper);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.ach-outcome-desc {
+  font-size: .9rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.ach-outcome-desc strong {
+  color: var(--gold-light);
+  font-weight: 500;
+}
+
+.ach-section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin-bottom: 3rem;
+  color: var(--paper);
+}
+
+.ach-section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.ach-impact {
+  margin: 6rem 0;
+}
+
+.ach-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.ach-impact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(200,169,110,0.02);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: all .3s ease;
+}
+
+.ach-impact-item:hover {
+  border-color: var(--gold);
+  background: rgba(200,169,110,0.06);
+}
+
+.ach-impact-emoji {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  filter: grayscale(0.2);
+}
+
+.ach-impact-content {
+  flex: 1;
+}
+
+.ach-impact-metric {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--gold-light);
+  margin-bottom: .25rem;
+  line-height: 1.3;
+}
+
+.ach-impact-label {
+  font-size: .75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.ach-leadership {
+  margin: 5rem 0;
+  background: rgba(200,169,110,0.03);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3rem 2.5rem;
+}
+
+.ach-leadership-list {
+  list-style: none;
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.ach-leadership-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: .95rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.ach-leadership-list li::before {
+  content: "→";
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.ach-footer {
+  margin-top: 4rem;
+  padding: 2rem 2.5rem;
+  background: rgba(200,169,110,0.04);
+  border-left: 4px solid var(--gold);
+  border-radius: 4px;
+}
+
+.ach-footer p {
+  font-size: .9rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.ach-footer em {
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .achievements-stats {
+    grid-template-columns: 1fr;
+  }
+  .ach-outcomes-grid {
+    grid-template-columns: 1fr;
+  }
+  .ach-impact-grid {
+    grid-template-columns: 1fr;
+  }
+  .ach-section-title {
+    font-size: 2rem;
+  }
+  .ach-leadership {
+    padding: 2rem 1.5rem;
+  }
+}
+
+
 </head>
 <body>
 
@@ -1113,6 +1362,7 @@ footer {
     <li><a href="#expertise">Expertise</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#impact">Impact</a></li>
+    <li><a href="#achievements">Achievements</a></li>
     <li><a href="#recommendations">Proof</a></li>
     <li><a href="#consulting">Consulting</a></li>
   </ul>
@@ -1157,6 +1407,7 @@ footer {
   <div class="hero-right">
     <div class="profile-block">
       <div class="profile-img">
+        <img src="profile-photo.jpg" alt="Chetan Tuppad - Principal InfoSec Engineer">
         <div class="profile-geo"></div>
         <div class="profile-initial-art">CT</div>
         <div class="profile-caption">
@@ -1471,10 +1722,150 @@ footer {
   </div>
 </section>
 
-<!-- ══════ CERTIFICATIONS ══════ -->
-<section class="section-wrap" id="certifications" style="background:rgba(200,169,110,0.015);">
+
+<!-- ══════ H1 2026 ACHIEVEMENTS ══════ -->
+<section class="section-wrap" id="achievements" style="background:rgba(200,169,110,0.015);">
   <div class="sec-header">
     <span class="sec-num">05</span>
+    <h2 class="sec-title">Recent<br><em>Achievements</em></h2>
+    <div class="sec-rule"></div>
+    <p class="sec-subtext">Led enterprise-wide security infrastructure modernization across WAF engineering, CDN access governance, PCI compliance controls, SIEM integration, bot mitigation, and critical vulnerability response.</p>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="achievements-stats reveal">
+    <div class="ach-stat-card">
+      <div class="ach-stat-icon">✅</div>
+      <div class="ach-stat-number">7</div>
+      <div class="ach-stat-label">Initiatives Completed</div>
+    </div>
+    <div class="ach-stat-card">
+      <div class="ach-stat-icon">🔄</div>
+      <div class="ach-stat-number">2</div>
+      <div class="ach-stat-label">In Progress</div>
+    </div>
+    <div class="ach-stat-card">
+      <div class="ach-stat-icon">🎯</div>
+      <div class="ach-stat-number">56%</div>
+      <div class="ach-stat-label">WAF Coverage</div>
+      <div class="ach-stat-note">(vs 50% target)</div>
+    </div>
+    <div class="ach-stat-card">
+      <div class="ach-stat-icon">🔐</div>
+      <div class="ach-stat-number">100%</div>
+      <div class="ach-stat-label">PCI Protection</div>
+    </div>
+  </div>
+
+  <!-- Key Outcomes Grid -->
+  <div class="ach-outcomes-grid reveal">
+    <div class="ach-outcome-card">
+      <div class="ach-outcome-icon">🛡️</div>
+      <h3 class="ach-outcome-title">WAF Coverage Excellence</h3>
+      <p class="ach-outcome-desc">
+        <strong>Exceeded enterprise WAF coverage targets</strong>, achieving 56% block mode protection for non-cloud external hostnames (vs. 50% target). Expanded protection across multiple high-value application portfolios including payment systems, authentication services, and customer-facing platforms.
+      </p>
+    </div>
+
+    <div class="ach-outcome-card">
+      <div class="ach-outcome-icon">🔐</div>
+      <h3 class="ach-outcome-title">API-First Access Governance</h3>
+      <p class="ach-outcome-desc">
+        <strong>Successfully transitioned CDN platform access to API-only operating model</strong> using Git-based infrastructure-as-code workflows, strengthening access governance and audit trails across the enterprise.
+      </p>
+    </div>
+
+    <div class="ach-outcome-card">
+      <div class="ach-outcome-icon">💳</div>
+      <h3 class="ach-outcome-title">PCI-DSS WAF Hardening</h3>
+      <p class="ach-outcome-desc">
+        <strong>Completed PCI WAF onboarding program</strong>, ensuring all payment card industry (PCI DSS) hostnames are protected with enterprise-grade WAF and rate-limiting controls, strengthening compliance posture.
+      </p>
+    </div>
+
+    <div class="ach-outcome-card">
+      <div class="ach-outcome-icon">🤖</div>
+      <h3 class="ach-outcome-title">Bot Mitigation Deployment</h3>
+      <p class="ach-outcome-desc">
+        <strong>Activated Bot Manager in full mitigation mode</strong> for high-traffic web hosting platforms, significantly reducing automated threat exposure and account takeover attempts.
+      </p>
+    </div>
+
+    <div class="ach-outcome-card">
+      <div class="ach-outcome-icon">📊</div>
+      <h3 class="ach-outcome-title">24x7 SOC Integration</h3>
+      <p class="ach-outcome-desc">
+        <strong>Established round-the-clock security event visibility</strong> via SIEM alerting with 24x7 SOC coverage, enabling real-time incident response for critical production environments.
+      </p>
+    </div>
+
+    <div class="ach-outcome-card">
+      <div class="ach-outcome-icon">🔑</div>
+      <h3 class="ach-outcome-title">Certificate & Identity Management</h3>
+      <p class="ach-outcome-desc">
+        <strong>Assumed full ownership of CDN certificate lifecycle management</strong>, streamlining PKI operations and improving security posture through centralized governance.
+      </p>
+    </div>
+  </div>
+
+  <!-- Operational Excellence -->
+  <div class="ach-impact reveal">
+    <h3 class="ach-section-title">Operational <em>Excellence</em></h3>
+
+    <div class="ach-impact-grid">
+      <div class="ach-impact-item">
+        <span class="ach-impact-emoji">📋</span>
+        <div class="ach-impact-content">
+          <div class="ach-impact-metric">API-first governance model</div>
+          <div class="ach-impact-label">deployed enterprise-wide</div>
+        </div>
+      </div>
+      <div class="ach-impact-item">
+        <span class="ach-impact-emoji">🔑</span>
+        <div class="ach-impact-content">
+          <div class="ach-impact-metric">Centralized certificate ownership</div>
+          <div class="ach-impact-label">for CDN infrastructure</div>
+        </div>
+      </div>
+      <div class="ach-impact-item">
+        <span class="ach-impact-emoji">👥</span>
+        <div class="ach-impact-content">
+          <div class="ach-impact-metric">Enhanced IAM controls</div>
+          <div class="ach-impact-label">with RBAC governance framework</div>
+        </div>
+      </div>
+      <div class="ach-impact-item">
+        <span class="ach-impact-emoji">🔒</span>
+        <div class="ach-impact-content">
+          <div class="ach-impact-metric">Account protection controls</div>
+          <div class="ach-impact-label">for managed hosting platforms</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Strategic Leadership -->
+  <div class="ach-leadership reveal">
+    <h3 class="ach-section-title">Strategic <em>Leadership</em></h3>
+    <ul class="ach-leadership-list">
+      <li>Led cross-functional teams across security engineering, platform operations, and compliance</li>
+      <li>Balanced 7 parallel initiatives while maintaining operational excellence</li>
+      <li>Drove API-first transformation for enterprise CDN access governance</li>
+      <li>Exceeded key performance targets (WAF coverage, bot mitigation, PCI compliance)</li>
+      <li>Established 24x7 security operations capability with SIEM integration</li>
+    </ul>
+  </div>
+
+  <!-- Footer Note -->
+  <div class="ach-footer reveal">
+    <p><em>This work demonstrates expertise in enterprise security architecture, PCI-DSS compliance engineering, WAF/CDN governance, bot mitigation, infrastructure-as-code, and cross-functional security program leadership at Fortune 500 scale.</em></p>
+  </div>
+</section>
+
+
+<section class="section-wrap" id="certifications" style="background:rgba(200,169,110,0.015);">
+  <div class="sec-header">
+    <span class="sec-num">06</span>
     <h2 class="sec-title">10 Certs.<br><em>Zero Shortcuts.</em></h2>
     <div class="sec-rule"></div>
   </div>
@@ -1535,7 +1926,7 @@ footer {
 <!-- ══════ AWARDS ══════ -->
 <section class="section-wrap" id="awards">
   <div class="sec-header">
-    <span class="sec-num">06</span>
+    <span class="sec-num">07</span>
     <h2 class="sec-title">Awards &<br><em>Recognition</em></h2>
     <div class="sec-rule"></div>
   </div>
@@ -1564,7 +1955,7 @@ footer {
 <!-- ══════ RECOMMENDATIONS ══════ -->
 <section class="section-wrap" id="recommendations" style="background:rgba(200,169,110,0.015);">
   <div class="sec-header">
-    <span class="sec-num">07</span>
+    <span class="sec-num">08</span>
     <h2 class="sec-title">23 Professionals.<br><em>One Verdict.</em></h2>
     <div class="sec-rule"></div>
   </div>
